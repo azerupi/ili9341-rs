@@ -26,7 +26,7 @@ where
     {
         for Pixel(point, color) in pixels {
             if self.bounding_box().contains(point) {
-                let x = point.x as u16;
+                let x = (self.width() - 1) as u16 - point.x as u16;
                 let y = point.y as u16;
 
                 self.draw_raw_iter(
@@ -56,9 +56,9 @@ where
             if area == &drawable_area {
                 // All pixels are on screen
                 self.draw_raw_iter(
-                    x0,
+                    (self.width - 1) as u16 - x1,
                     y0,
-                    x1,
+                    (self.width - 1) as u16 - x0,
                     y1,
                     area.points()
                         .zip(colors)
@@ -67,9 +67,9 @@ where
             } else {
                 // Some pixels are on screen
                 self.draw_raw_iter(
-                    x0,
+                    (self.width - 1) as u16 - x1,
                     y0,
-                    x1,
+                    (self.width - 1) as u16 - x0,
                     y1,
                     area.points()
                         .zip(colors)
